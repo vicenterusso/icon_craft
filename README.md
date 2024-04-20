@@ -4,6 +4,8 @@
 
 IconCraft is a Flutter plugin designed to extend the functionality of the standard `Icon` widget. It allows developers to create richer iconography with the ability to combine two icons into a single widget with alignment and scaling options.
 
+> 🚧 Please note: This project is currently in its initial development phase. As such, the API may undergo significant modifications. 
+
 ## Features
 
 - **Borders**: Add customizable borders around your icons with configurable colors, widths, and styles.
