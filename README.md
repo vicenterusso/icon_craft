@@ -58,9 +58,6 @@ IconCraft(
 
 ▶️ Add 3rd party icon packages compatibility list
 
-▶️ Add tests
-
-
 ## Screenshots
 Here are some screenshots showing what you can achieve with IconCraft:
 
@@ -68,7 +65,7 @@ Here are some screenshots showing what you can achieve with IconCraft:
 
 ## Icon packages compatibility:
 
-TODO
+✅ [Icons Plus](https://pub.dev/packages/icons_plus)
 
 ## Credits
 
