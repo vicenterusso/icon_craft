@@ -1,6 +1,6 @@
 # IconCraft
 
-![](example/assets/banner.png)
+![](https://raw.githubusercontent.com/vicenterusso/icon_craft/main/example/assets/banner.png)
 
 IconCraft is a Flutter plugin designed to extend the functionality of the standard `Icon` widget. It allows developers to create richer iconography with the ability to combine two icons into a single widget with alignment and scaling options.
 
@@ -63,7 +63,7 @@ IconCraft(
 ## Screenshots
 Here are some screenshots showing what you can achieve with IconCraft:
 
-![](example/assets/example01.png)
+![](https://raw.githubusercontent.com/vicenterusso/icon_craft/main/example/assets/example01.png)
 
 ## Icon packages compatibility:
 
