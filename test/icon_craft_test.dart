@@ -24,7 +24,7 @@ void main() {
       find.byWidgetPredicate(
         (Widget widget) => widget is RichText && widget.text.style?.color == defaultIconColor,
       ),
-      findsExactly(2),
+      findsNWidgets(2),
     );
   });
 
@@ -47,14 +47,14 @@ void main() {
       ),
     ));
 
-    expect(find.text(String.fromCharCode(Icons.person.codePoint), findRichText: true), findsOne);
-    expect(find.text(String.fromCharCode(Icons.comment_bank.codePoint), findRichText: true), findsExactly(2));
+    expect(find.text(String.fromCharCode(Icons.person.codePoint), findRichText: true), findsOneWidget);
+    expect(find.text(String.fromCharCode(Icons.comment_bank.codePoint), findRichText: true), findsNWidgets(2));
 
     expect(
       find.byWidgetPredicate(
         (Widget widget) => widget is RichText && widget.text.style?.color == Colors.yellow,
       ),
-      findsExactly(2), // secondary icon should inherit the color of the base icon
+      findsNWidgets(2), // secondary icon should inherit the color of the base icon
     );
 
     final richTextFinder = find.byWidgetPredicate(
@@ -90,8 +90,8 @@ void main() {
       ),
     ));
 
-    expect(find.text(String.fromCharCode(Icons.email.codePoint), findRichText: true), findsOne);
-    expect(find.text(String.fromCharCode(Icons.check_circle.codePoint), findRichText: true), findsOne);
+    expect(find.text(String.fromCharCode(Icons.email.codePoint), findRichText: true), findsOneWidget);
+    expect(find.text(String.fromCharCode(Icons.check_circle.codePoint), findRichText: true), findsOneWidget);
 
     final RichText secondaryIcon = tester.widget(find.text(String.fromCharCode(Icons.check_circle.codePoint), findRichText: true));
     expect(secondaryIcon.text.style?.color, equals(Colors.red));
