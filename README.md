@@ -75,4 +75,4 @@ This package is inspired by Roux Guillame's work. His original code can be found
 
 ## License
 
-Distributed under the MIT License. See LICENSE for more information.
+Distributed under the BSD 3-Clause License. See LICENSE for more information.
