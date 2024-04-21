@@ -4,8 +4,6 @@
 
 IconCraft is a Flutter plugin designed to extend the functionality of the standard `Icon` widget. It allows developers to create richer iconography with the ability to combine two icons into a single widget with alignment and scaling options.
 
-> 🚧 Please note: This project is currently in its initial development phase. As such, the API may undergo significant modifications. 
-
 ## Features
 
 - **Borders**: Add customizable borders around your icons with configurable colors, widths, and styles.
@@ -26,42 +24,63 @@ Run `flutter pub get` to install the new dependency.
 ## Usage
 Here's how you can use the IconCraft widget in your Flutter application:
 
-#### Base Icon
+#### Basic Usage
+
+<img src="https://raw.githubusercontent.com/vicenterusso/icon_craft/main/example/assets/icon_01.png" align = "right">
 
 ```dart
 IconCraft(
-  primaryIcon: Icon(Icons.email),
-  decoration: IconDecoration(
-    border: IconBorder(color: Colors.black, width: 2.0),
-  ),
-)
-```
-
-#### Adding a Secondary Icon
-
-To add a secondary icon with `top right` alignment:
-
-```dart
-IconCraft(
-  primaryIcon: Icon(Icons.message),
-  secondaryIcon: Icon(Icons.check),
+  Icon(Icons.email),
+  Icon(Icons.notifications),
   alignment: Alignment.topRight,
   decoration: IconDecoration(
-    border: IconBorder(color: Colors.blue, width: 1.0),
+    border: IconBorder(color: Colors.white),
   ),
 )
 ```
 
-## TODO
+The border width of the secondary icon automatically adjusts to the basic icon size. However, you can override this by using the width parameter.
 
-▶️ Add many more examples
+```dart
+decoration: IconDecoration(
+  border: IconBorder(
+    color: Colors.white,
+    width: 10,
+  ),
+)
+```
 
-▶️ Add screenshots
+#### Colored & Aligned Icons
 
-▶️ Add 3rd party icon packages compatibility list
+<img src="https://raw.githubusercontent.com/vicenterusso/icon_craft/main/example/assets/icon_02.png" align = "right">
+
+
+```dart
+IconCraft(
+  Icon(
+    CupertinoIcons.car_detailed,
+    color: Colors.grey.shade500,
+  ),
+  Icon(
+    CupertinoIcons.checkmark_square_fill,
+    color: Colors.green.shade200,
+  ),
+  alignment: Alignment.bottomLeft,
+  decoration: IconDecoration(
+    border: IconBorder(
+      color: Colors.green.shade900,
+      width: 8.0,
+    ),
+  ),
+)
+```
+
+You can color all the three elements: base icon, secondary icon and the color of the stroke/border effect, and its width
+
 
 ## Screenshots
-Here are some screenshots showing what you can achieve with IconCraft:
+
+Here are a few examples demonstrating what you can accomplish with IconCraft:
 
 ![](https://raw.githubusercontent.com/vicenterusso/icon_craft/main/example/assets/example01.png)
 

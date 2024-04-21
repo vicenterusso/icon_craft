@@ -40,7 +40,6 @@ class IconCraft extends StatelessWidget {
   final IconDecoration? decoration;
   final double secondaryIconSizeFactor;
   final Alignment? alignment;
-  final Color? secondaryIconColor;
 
   const IconCraft(
     this.icon,
@@ -49,7 +48,6 @@ class IconCraft extends StatelessWidget {
     this.decoration,
     this.secondaryIconSizeFactor = 0.5,
     this.alignment = Alignment.topRight,
-    this.secondaryIconColor,
   }) : super(key: key);
 
   @override
@@ -78,7 +76,7 @@ class IconCraft extends StatelessWidget {
 
     final TextStyle secondaryIconStyle = TextStyle(
       inherit: false,
-      color: secondaryIconColor ?? iconColor,
+      color: secondaryIcon.color ?? iconColor,
       fontSize: secondaryIconSize,
       fontFamily: secondaryIconData.fontFamily,
       package: secondaryIconData.fontPackage,

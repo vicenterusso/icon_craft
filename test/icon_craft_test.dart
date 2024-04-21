@@ -83,8 +83,10 @@ void main() {
       home: Scaffold(
         body: IconCraft(
           Icon(Icons.email),
-          Icon(Icons.check_circle),
-          secondaryIconColor: Colors.red,
+          Icon(
+            Icons.check_circle,
+            color: Colors.red,
+          ),
           secondaryIconSizeFactor: 0.1,
         ),
       ),
