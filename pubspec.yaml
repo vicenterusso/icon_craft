@@ -1,6 +1,6 @@
 name: icon_craft
 description: "IconCraft allows developers to create richer iconography with the ability to combine two icons into a single widget"
-version: 0.1.0+2
+version: 0.1.0+3
 homepage: https://github.com/vicenterusso/icon_craft
 repository: https://github.com/vicenterusso/icon_craft
 issue_tracker: https://github.com/vicenterusso/icon_craft/issues
