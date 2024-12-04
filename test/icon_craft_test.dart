@@ -1,6 +1,9 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:icon_craft/icon_craft.dart';
+import 'package:vector_math/vector_math_64.dart' hide Colors;
 
 void main() {
   //
@@ -99,4 +102,48 @@ void main() {
     expect(secondaryIcon.text.style?.color, equals(Colors.red));
     expect(secondaryIcon.text.style?.fontSize, equals(24.0 * 0.1)); // Assuming default size is 24.0
   });
+
+  testWidgets('IconCraft applies rotation to primary and secondary icons', (WidgetTester tester) async {
+    const double primaryRotation = 45.0;
+    const double secondaryRotation = 90.0;
+
+    await tester.pumpWidget(const MaterialApp(
+      home: Scaffold(
+        body: IconCraft(
+          Icon(Icons.email),
+          Icon(Icons.check_circle),
+          rotation: primaryRotation,
+          secondaryRotation: secondaryRotation,
+        ),
+      ),
+    ));
+
+    final primaryIconFinder = find.byWidgetPredicate(
+      (Widget widget) =>
+          widget is Transform &&
+          widget.alignment == Alignment.center &&
+          isRotationApplied(widget.transform, primaryRotation),
+    );
+    expect(primaryIconFinder, findsOneWidget);
+
+    final secondaryIconFinder = find.byWidgetPredicate(
+      (Widget widget) =>
+          widget is Transform &&
+          widget.alignment == Alignment.center &&
+          isRotationApplied(widget.transform, secondaryRotation),
+    );
+    expect(secondaryIconFinder, findsOneWidget);
+  });
 }
+
+bool isRotationApplied(Matrix4 matrix, double expectedRotationInDegrees) {
+  final Matrix3 rotationMatrix = matrix.getRotation();
+  final double sinTheta = rotationMatrix.entry(1, 0);
+  final double cosTheta = rotationMatrix.entry(0, 0);
+  final double actualRotationInRadians = atan2(sinTheta, cosTheta);
+  final double actualRotationInDegrees = actualRotationInRadians * (180 / pi);
+
+  // Allow a small margin for floating-point precision issues
+  return (actualRotationInDegrees - expectedRotationInDegrees).abs() < 0.01;
+}
+
