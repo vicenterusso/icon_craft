@@ -9,6 +9,7 @@ IconCraft is a Flutter plugin designed to extend the functionality of the standa
 - **Borders**: Add customizable borders around your icons with configurable colors, widths, and styles.
 - **Secondary Icon**: Add an auxiliary icon on top of the base icon, with control over its alignment and relative size, perfect for building creative icon designs.
 - **Flexible Alignment**: Precisely position a secondary icon relative to the primary icon, suitable for various UI design needs.
+- **Rotation**: Rotate the base and/or secondary icons independently by specifying angles in degrees.
 
 ## Installation
 
@@ -77,6 +78,23 @@ IconCraft(
 
 You can color all the three elements: base icon, secondary icon and the color of the stroke/border effect, and its width
 
+#### Rotation
+
+```dart
+IconCraft(
+  Icon(Icons.calendar_today_outlined),
+  Icon(Icons.switch_access_shortcut),
+  secondaryIconSizeFactor: 0.8,
+  rotation: 45,
+  secondaryRotation: 90,
+  alignment: Alignment(-4, .8),
+  decoration: IconDecoration(
+    border: IconBorder(color: Colors.white, width: 1.5),
+  ),
+)
+```
+
+You can independently rotate the base and secondary icons by specifying the `rotation` and `secondaryRotation` properties.
 
 ## Screenshots
 
