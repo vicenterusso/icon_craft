@@ -60,12 +60,12 @@ class IconCraft extends StatelessWidget {
     final secondaryIconSize = iconSize * secondaryIconSizeFactor;
     final iconOpacity = iconTheme.opacity ?? 1.0;
     final border = decoration?.border;
-    final iconFill = icon?.fill ?? iconTheme.fill;
-    final secondaryIconFill = secondaryIcon?.fill ?? iconTheme.fill;
+    final iconFill = icon.fill ?? iconTheme.fill;
+    final secondaryIconFill = secondaryIcon.fill ?? iconTheme.fill;
 
     Color iconColor = icon.color ?? iconTheme.color!;
     if (iconOpacity != 1.0) {
-      iconColor = iconColor.withOpacity(iconColor.opacity * iconOpacity);
+      iconColor = iconColor.withValues(alpha: iconOpacity);
     }
 
     final TextStyle iconStyle = TextStyle(
