@@ -60,6 +60,8 @@ class IconCraft extends StatelessWidget {
     final secondaryIconSize = iconSize * secondaryIconSizeFactor;
     final iconOpacity = iconTheme.opacity ?? 1.0;
     final border = decoration?.border;
+    final iconFill = icon?.fill ?? iconTheme.fill;
+    final secondaryIconFill = secondaryIcon?.fill ?? iconTheme.fill;
 
     Color iconColor = icon.color ?? iconTheme.color!;
     if (iconOpacity != 1.0) {
@@ -72,6 +74,11 @@ class IconCraft extends StatelessWidget {
       fontSize: iconSize,
       fontFamily: iconData.fontFamily,
       package: iconData.fontPackage,
+      fontVariations: iconFill != null
+          ? [
+              FontVariation('FILL', iconFill),
+            ]
+          : null,
     );
 
     final TextStyle secondaryIconStyle = TextStyle(
@@ -80,6 +87,11 @@ class IconCraft extends StatelessWidget {
       fontSize: secondaryIconSize,
       fontFamily: secondaryIconData.fontFamily,
       package: secondaryIconData.fontPackage,
+      fontVariations: secondaryIconFill != null
+          ? [
+              FontVariation('FILL', secondaryIconFill),
+            ]
+          : null,
     );
 
     Widget iconWidget = RichText(
