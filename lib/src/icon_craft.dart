@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:icon_craft/src/icon_decoration.dart';
 
@@ -40,12 +42,16 @@ class IconCraft extends StatelessWidget {
   final IconDecoration? decoration;
   final double secondaryIconSizeFactor;
   final Alignment? alignment;
+  final double rotation;
+  final double secondaryRotation;
 
   const IconCraft(
     this.icon,
     this.secondaryIcon, {
     Key? key,
     this.decoration,
+    this.rotation = 0,
+    this.secondaryRotation = 0,
     this.secondaryIconSizeFactor = 0.5,
     this.alignment = Alignment.topRight,
   }) : super(key: key);
@@ -94,42 +100,36 @@ class IconCraft extends StatelessWidget {
           : null,
     );
 
-    Widget iconWidget = RichText(
-      overflow: TextOverflow.visible,
-      textDirection: textDirection,
-      text: TextSpan(
-        text: String.fromCharCode(iconData.codePoint),
-        style: iconStyle,
+    Widget iconWidget = Transform(
+      transform: Matrix4.identity()
+        ..rotateZ(rotation * pi / 180)
+        ..scale(iconData.matchTextDirection && textDirection == TextDirection.rtl ? -1.0 : 1.0, 1.0, 1.0),
+      alignment: Alignment.center,
+      transformHitTests: false,
+      child: RichText(
+        overflow: TextOverflow.visible,
+        textDirection: textDirection,
+        text: TextSpan(
+          text: String.fromCharCode(iconData.codePoint),
+          style: iconStyle,
+        ),
       ),
     );
 
-    if (iconData.matchTextDirection) {
-      switch (textDirection) {
-        case TextDirection.rtl:
-          iconWidget = Transform(
-            transform: Matrix4.identity()..scale(-1.0, 1, 1),
-            alignment: Alignment.center,
-            transformHitTests: false,
-            child: iconWidget,
-          );
-          break;
-        case TextDirection.ltr:
-          break;
-      }
-    }
-
-    Widget? secondaryStackIconWidget;
-    Widget secondaryIconWidget = RichText(
-      overflow: TextOverflow.visible,
-      textDirection: textDirection,
-      text: TextSpan(
-        text: String.fromCharCode(secondaryIconData.codePoint),
-        style: secondaryIconStyle,
+    Widget secondaryIconWidget = Transform.rotate(
+      angle: secondaryRotation * pi / 180, 
+      child: RichText(
+        overflow: TextOverflow.visible,
+        textDirection: textDirection,
+        text: TextSpan(
+          text: String.fromCharCode(secondaryIconData.codePoint),
+          style: secondaryIconStyle,
+        ),
       ),
     );
 
-    secondaryStackIconWidget = secondaryIconWidget;
 
+    Widget secondaryStackIconWidget = secondaryIconWidget;
     if (border != null) {
       // Calculate border width as 10% of the icon size
       final borderWidth = iconSize * 0.1;
