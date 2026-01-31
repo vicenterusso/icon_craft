@@ -62,8 +62,7 @@ class IconCraft extends StatelessWidget {
     
     // Apply text scaling if enabled in IconTheme
     if (iconTheme.applyTextScaling ?? false) {
-      final double textScaleFactor = MediaQuery.textScalerOf(context).scale(iconSize) / iconSize;
-      iconSize = iconSize * textScaleFactor;
+      iconSize = MediaQuery.textScalerOf(context).scale(iconSize);
     }
     
     final secondaryIconSize = iconSize * secondaryIconSizeFactor;
