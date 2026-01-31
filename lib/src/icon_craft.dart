@@ -56,7 +56,16 @@ class IconCraft extends StatelessWidget {
     final secondaryIconData = secondaryIcon.icon!;
     final textDirection = icon.textDirection ?? Directionality.of(context);
     final iconTheme = IconTheme.of(context);
-    final iconSize = icon.size ?? iconTheme.size ?? 24.0;
+    
+    // Calculate base icon size
+    double iconSize = icon.size ?? iconTheme.size ?? 24.0;
+    
+    // Apply text scaling if enabled in IconTheme
+    if (iconTheme.applyTextScaling ?? false) {
+      final double textScaleFactor = MediaQuery.textScalerOf(context).scale(iconSize) / iconSize;
+      iconSize = iconSize * textScaleFactor;
+    }
+    
     final secondaryIconSize = iconSize * secondaryIconSizeFactor;
     final iconOpacity = iconTheme.opacity ?? 1.0;
     final border = decoration?.border;
