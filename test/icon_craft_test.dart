@@ -99,4 +99,205 @@ void main() {
     expect(secondaryIcon.text.style?.color, equals(Colors.red));
     expect(secondaryIcon.text.style?.fontSize, equals(24.0 * 0.1)); // Assuming default size is 24.0
   });
+
+  testWidgets('IconCraft applies text scaling when applyTextScaling is true', (WidgetTester tester) async {
+    const double testIconSize = 24.0;
+    const double textScaleFactor = 1.5;
+
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: ThemeData(
+          iconTheme: const IconThemeData(applyTextScaling: true),
+        ),
+        home: MediaQuery(
+          data: const MediaQueryData(
+            textScaler: TextScaler.linear(textScaleFactor),
+          ),
+          child: const Scaffold(
+            body: IconCraft(
+              Icon(Icons.email, size: testIconSize),
+              Icon(Icons.check_circle),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    // Find the primary icon RichText widget
+    final richTextWidgets = tester.widgetList<RichText>(find.byType(RichText)).toList();
+    
+    // The primary icon should have scaled size
+    final primaryIconWidget = richTextWidgets.firstWhere(
+      (widget) => (widget.text as TextSpan).text == String.fromCharCode(Icons.email.codePoint),
+    );
+    expect(primaryIconWidget.text.style?.fontSize, equals(testIconSize * textScaleFactor));
+  });
+
+  testWidgets('IconCraft applies text scaling with 2.0x scale factor', (WidgetTester tester) async {
+    const double testIconSize = 24.0;
+    const double textScaleFactor = 2.0;
+
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: ThemeData(
+          iconTheme: const IconThemeData(applyTextScaling: true),
+        ),
+        home: MediaQuery(
+          data: const MediaQueryData(
+            textScaler: TextScaler.linear(textScaleFactor),
+          ),
+          child: const Scaffold(
+            body: IconCraft(
+              Icon(Icons.email, size: testIconSize),
+              Icon(Icons.check_circle),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    final richTextWidgets = tester.widgetList<RichText>(find.byType(RichText)).toList();
+    
+    final primaryIconWidget = richTextWidgets.firstWhere(
+      (widget) => (widget.text as TextSpan).text == String.fromCharCode(Icons.email.codePoint),
+    );
+    expect(primaryIconWidget.text.style?.fontSize, equals(testIconSize * textScaleFactor));
+  });
+
+  testWidgets('IconCraft scales both primary and secondary icons proportionally', (WidgetTester tester) async {
+    const double testIconSize = 24.0;
+    const double textScaleFactor = 1.5;
+    const double secondaryIconSizeFactor = 0.5;
+
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: ThemeData(
+          iconTheme: const IconThemeData(applyTextScaling: true),
+        ),
+        home: MediaQuery(
+          data: const MediaQueryData(
+            textScaler: TextScaler.linear(textScaleFactor),
+          ),
+          child: const Scaffold(
+            body: IconCraft(
+              Icon(Icons.email, size: testIconSize),
+              Icon(Icons.check_circle),
+              secondaryIconSizeFactor: secondaryIconSizeFactor,
+            ),
+          ),
+        ),
+      ),
+    );
+
+    final richTextWidgets = tester.widgetList<RichText>(find.byType(RichText)).toList();
+    
+    final primaryIconWidget = richTextWidgets.firstWhere(
+      (widget) => (widget.text as TextSpan).text == String.fromCharCode(Icons.email.codePoint),
+    );
+    final secondaryIconWidget = richTextWidgets.firstWhere(
+      (widget) => (widget.text as TextSpan).text == String.fromCharCode(Icons.check_circle.codePoint),
+    );
+
+    final expectedPrimarySize = testIconSize * textScaleFactor;
+    final expectedSecondarySize = expectedPrimarySize * secondaryIconSizeFactor;
+
+    expect(primaryIconWidget.text.style?.fontSize, equals(expectedPrimarySize));
+    expect(secondaryIconWidget.text.style?.fontSize, equals(expectedSecondarySize));
+  });
+
+  testWidgets('IconCraft does not apply text scaling when applyTextScaling is false', (WidgetTester tester) async {
+    const double testIconSize = 24.0;
+    const double textScaleFactor = 1.5;
+
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: ThemeData(
+          iconTheme: const IconThemeData(applyTextScaling: false),
+        ),
+        home: MediaQuery(
+          data: const MediaQueryData(
+            textScaler: TextScaler.linear(textScaleFactor),
+          ),
+          child: const Scaffold(
+            body: IconCraft(
+              Icon(Icons.email, size: testIconSize),
+              Icon(Icons.check_circle),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    final richTextWidgets = tester.widgetList<RichText>(find.byType(RichText)).toList();
+    
+    final primaryIconWidget = richTextWidgets.firstWhere(
+      (widget) => (widget.text as TextSpan).text == String.fromCharCode(Icons.email.codePoint),
+    );
+
+    // Should NOT be scaled
+    expect(primaryIconWidget.text.style?.fontSize, equals(testIconSize));
+  });
+
+  testWidgets('IconCraft does not apply text scaling when applyTextScaling is not set', (WidgetTester tester) async {
+    const double testIconSize = 24.0;
+    const double textScaleFactor = 1.5;
+
+    await tester.pumpWidget(
+      MaterialApp(
+        home: MediaQuery(
+          data: const MediaQueryData(
+            textScaler: TextScaler.linear(textScaleFactor),
+          ),
+          child: const Scaffold(
+            body: IconCraft(
+              Icon(Icons.email, size: testIconSize),
+              Icon(Icons.check_circle),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    final richTextWidgets = tester.widgetList<RichText>(find.byType(RichText)).toList();
+    
+    final primaryIconWidget = richTextWidgets.firstWhere(
+      (widget) => (widget.text as TextSpan).text == String.fromCharCode(Icons.email.codePoint),
+    );
+
+    // Should NOT be scaled (applyTextScaling defaults to false/null)
+    expect(primaryIconWidget.text.style?.fontSize, equals(testIconSize));
+  });
+
+  testWidgets('IconCraft with textScaleFactor 1.0 does not change size', (WidgetTester tester) async {
+    const double testIconSize = 24.0;
+    const double textScaleFactor = 1.0;
+
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: ThemeData(
+          iconTheme: const IconThemeData(applyTextScaling: true),
+        ),
+        home: MediaQuery(
+          data: const MediaQueryData(
+            textScaler: TextScaler.linear(textScaleFactor),
+          ),
+          child: const Scaffold(
+            body: IconCraft(
+              Icon(Icons.email, size: testIconSize),
+              Icon(Icons.check_circle),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    final richTextWidgets = tester.widgetList<RichText>(find.byType(RichText)).toList();
+    
+    final primaryIconWidget = richTextWidgets.firstWhere(
+      (widget) => (widget.text as TextSpan).text == String.fromCharCode(Icons.email.codePoint),
+    );
+
+    // With scale factor of 1.0, size should remain the same
+    expect(primaryIconWidget.text.style?.fontSize, equals(testIconSize));
+  });
 }
